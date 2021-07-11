@@ -37,6 +37,8 @@ app.post('/api/insert', (req, res) => {
     db.query(sqlInsert, [movie_name, movie_review], (err, result) => {
         console.log(result);
     });
+    
+    res.status(200).end();
 })
 
 app.listen(3001, () => {
