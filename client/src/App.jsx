@@ -1,6 +1,23 @@
+/** @jsxImportSource @emotion/react */
 import { useEffect, useState } from 'react';
 import './App.css';
 import Axios from 'axios';
+import { css } from '@emotion/react'
+
+const Card = css`
+  width: 500px;
+  height: 120px;
+  border: 2px solid #000;
+  border-radius: 15px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  & h1, p {
+    margin: 0px;
+  }
+`;
 
 function App() {
 
@@ -51,7 +68,12 @@ function App() {
           onClick={submitReview}>Submit</button>
 
         {movieReviewList.map((val, i) => {
-          return <h1 key={i.toString()}>MovieName: {val.movie_name} | Movie Review: {val.movie_review}</h1> 
+          return (
+            <div key={i.toString()} css={Card}>
+              <h1>{val.movie_name}</h1>
+              <p>{val.movie_review}</p>
+            </div>
+          )
         })}
       </div>
     </div>
