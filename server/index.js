@@ -53,6 +53,17 @@ app.delete('/api/delete', (req, res) => {
 // app.delete('/api/delete/:movie_name', (req, res) => {
 // const name = req.params.movie_name; でも受け取れる
 
+app.put('/api/update', (req, res) => {
+    const id = req.body.id;
+    const review = req.body.movie_review;
+    const slqUpdate = "UPDATE movie_reviews SET movie_review = ? WHERE id = ?;";
+
+    db.query(slqUpdate, [review, id], (err, result) => {
+        if (err) console.log(err);
+    })
+    res.status(200).end();
+})
+
 app.listen(3001, () => {
     console.log('running on port 3001');
 });

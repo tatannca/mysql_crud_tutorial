@@ -4,6 +4,8 @@ import './App.css';
 import Axios from 'axios';
 import { css } from '@emotion/react'
 
+import { MovieReviewItem } from './components/MovieReviewItem';
+
 const Form = css`
   display: flex;
   flex-direction: column;
@@ -16,24 +18,9 @@ const FormInput = css`
   margin: 10px;
   font-size: 25px;
 `;
-const Card = css`
-  width: 500px;
-  height: 170px;
-  border: 2px solid #000;
-  border-radius: 15px;
-  margin: 10px;
+const MovieReviewItemWrapper = css`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  & h1, p {
-    margin: 0px;
-  }
-`;
-const UpdateInput = css`
-  width: 100px;
-  height: 20px;
-  margin: 0 10px 10px;
+  flex-direction: column-reverse;
 `;
 
 function App() {
@@ -63,19 +50,6 @@ function App() {
     });
   }
 
-  const deleteReview = (id) => {
-    Axios.delete('http://localhost:3001/api/delete', {
-      data: {id}
-    }).then(() => {
-      const newReviewList = movieReviewList.filter(item => (
-        item.id !== id
-      ));
-      setMovieReviewList(newReviewList);
-    }).catch((err) => {
-      console.log(err)
-    });
-  }
-
   return (
     <div className="App">
       <h1>CRUD APPLICATION</h1>
@@ -101,22 +75,17 @@ function App() {
           type='button'
           onClick={submitReview}>Submit</button>
 
-        <div>
-        {movieReviewList.map((val, i) => {
-          return (
-            <div key={i.toString()} css={Card}>
-              <h1>{val.movie_name}</h1>
-              <p>{val.movie_review}</p>
-
-              <div>
-                <button onClick={() => deleteReview(val.id)}>Delete</button>
-                <input type="text" css={UpdateInput} />
-                <button>Update</button>
-              </div>
-            </div>
-          )
-        })}
+        <div css={MovieReviewItemWrapper}>
+        {movieReviewList.map((val, i) => (
+          <MovieReviewItem
+            key={i.toString()}
+            reviewItem={val}
+            movieReviewList={movieReviewList}
+            setMovieReviewList={setMovieReviewList}
+          />
+        ))}
         </div>
+
       </div>
     </div>
   );
