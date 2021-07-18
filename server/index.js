@@ -41,6 +41,18 @@ app.post('/api/insert', (req, res) => {
     res.status(200).end();
 })
 
+app.delete('/api/delete', (req, res) => {
+    const id = req.body.id;
+    const sqlDelete = "DELETE FROM movie_reviews WHERE id = '?';";
+
+    db.query(sqlDelete, id, (err, result) => {
+        if (err) console.log(err, id);
+    })
+    res.status(200).end();
+})
+// app.delete('/api/delete/:movie_name', (req, res) => {
+// const name = req.params.movie_name; でも受け取れる
+
 app.listen(3001, () => {
     console.log('running on port 3001');
 });
